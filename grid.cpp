@@ -37,7 +37,6 @@ Grid::Grid() {
 }
 
 /*******************************************************************************
-	INCOMPLETE 	INCOMPLETE	INCOMPLETE	INCOMPLETE	INCOMPLETE	INCOMPLETE
 									Grid::Grid
 Constructor that takes rows and cols param from user
 *******************************************************************************/
