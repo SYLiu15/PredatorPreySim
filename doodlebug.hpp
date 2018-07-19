@@ -21,10 +21,10 @@ public:
 	Doodlebug(); // Default constructor
 	Doodlebug(int rowIn, int colIn); // 2-param constructor
 
-	bool move() override;
-	bool breed() override;
+	void move() override;
+	void breed() override;
 
-	bool starve();
+	void starve();
 
 	int getStepsSinceEating() const;
 

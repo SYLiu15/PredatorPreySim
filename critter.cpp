@@ -78,7 +78,7 @@ INCOMPLETE INCOMPLETE INCOMPLETE INCOMPLETE INCOMPLETE INCOMPLETE INCOMPLETE
  successfully moves, the function returns true. If not, it returns false. It
  should also increment the stepsSinceBreed variable at each move.
 *******************************************************************************/
-bool Critter::move() {
+void Critter::move() {
 
 	int direction = rand()/4;
 	// 0 represents North; 1 East; 2 South; 3 West

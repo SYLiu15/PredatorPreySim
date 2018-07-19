@@ -21,9 +21,9 @@ protected:
 public:
 	Critter();
 	Critter(int rowIn, int colIn);
-	virtual bool move();
+	virtual void move();
 
-	virtual bool breed() = 0;
+	virtual void breed() = 0;
 
 	int getRow() const;
 	int getCol() const;

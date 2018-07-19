@@ -15,6 +15,7 @@
 #include "ant.hpp"
 
 #include <iostream>
+#include <typeinfo> // for typeid use
 
 class Grid {
 private:
