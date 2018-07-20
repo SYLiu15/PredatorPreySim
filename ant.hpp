@@ -21,7 +21,7 @@ public:
 	// 2-param constructor calls Critter 2-param constructor
 	Ant(int rowIn, int colIn) : Critter(rowIn, colIn) {};
 
-	void breed() override;
+	//void breed() override;
 
 };
 

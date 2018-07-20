@@ -21,8 +21,8 @@ public:
 	Doodlebug(); // Default constructor
 	Doodlebug(int rowIn, int colIn); // 2-param constructor
 
-	void move() override;
-	void breed() override;
+	//void move() override;
+	//void breed() override;
 
 	void starve();
 

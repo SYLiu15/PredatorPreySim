@@ -23,7 +23,7 @@ public:
 	Critter(int rowIn, int colIn);
 	virtual void move();
 
-	virtual void breed() = 0;
+	virtual void breed() {};
 
 	int getRow() const;
 	int getCol() const;

@@ -11,21 +11,23 @@
 #include <iostream>
 #include <ctime> // Header file needed to use time
 
-#include "grid.hpp"
+//#include "grid.hpp" IMPLEMENTING DIRECTLY IN MAIN WITHOUT GRID CLASS
 #include "ant.hpp"
 #include "critter.hpp"
+#include "doodlebug.hpp"
 
 using std::cout;
 using std::endl;
 using std::cin;
 
-int getChoice (int maxChoice);
+int getChoice(int maxChoice);
 void displayRepeatMenu();
+void printGrid(int rows, int cols, Critter**** pGrid);
 
 int main() {
-
+	cout << "***********************************************" << endl;
 	cout << "Welcome to Group 13's Predator-Prey Simulation." << endl;
-
+	cout << "***********************************************" << endl;
 	// Set a random generator seed
 	// Referenced from Program 3-32 of C++ Early Objects, 9th Edition
 	unsigned seed;
@@ -33,17 +35,35 @@ int main() {
 	seed = static_cast<unsigned>(time(0));
 	srand(seed);
 
-	cout << "The simulation will occur on a grid whose size you may choose."
-			<< endl;
-	cout << "Please enter the number of rows for the grid: ";
+	cout << "\nThe simulation will occur on a grid whose size you may choose."
+	     << endl;
+	cout << "Please enter the number of rows for the grid: " << endl;
 	int rows = getChoice(400);
 
-	cout << "Please enter the number of columns for the grid: ";
+	cout << "Please enter the number of columns for the grid: " << endl;
 	int cols = getChoice(400);
 
-	Grid critterGrid(rows,cols); // Construct grid
+	// Construct grid
+	Critter*** critterGrid = new Critter** [rows];
+	for (int i = 0; i < rows; i++) {
+		critterGrid[i] = new Critter* [cols];
+	}
+
+	// Point all elements of critterGrid to nullptr
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			critterGrid[i][j] = nullptr;
+		}
+	}
+
+	// Create pointer to grid
+	Critter ****pGrid = &critterGrid;
 
 	// Add first ant and doodlebug
+	critterGrid[0][0] = new Ant(0,0);
+	critterGrid[0][1] = new Doodlebug(0,1);
+
+	printGrid(rows, cols, pGrid);
 
 	// Prompt user for # of timesteps
 	cout << "How many timesteps would you like the simulation to run?" << endl;
@@ -57,22 +77,58 @@ int main() {
 				if ((typeid(critterGrid[j][k]) == typeid(Doodlebug *))) {
 					critterGrid[j][k]->move(); // Move all Doodlebugs
 					// Check to see if any Doodlebugs should Starve
-					if (critterGrid[j][k]->getStepsSinceEating() >= 3) {
+					if (dynamic_cast<Doodlebug *>(critterGrid[j][k
+					])->getStepsSinceEating() >= 3) {
 						dynamic_cast<Doodlebug *>(critterGrid[j][k])->starve();
 					}
 				}
 			}
 		}
+
 		// For each element of the array, find Ant pointers
-				// Move all ants
+		for (int j = 0; j < rows; j++) {
+			for (int k = 0; k < cols; k++) {
+				if ((typeid(critterGrid[j][k]) == typeid(Ant *))) {
+					critterGrid[j][k]->move(); // Move all ants
+				}
+			}
+		}
+
 		// For each element of the array, find Doodlebug pointers
-				// Breed all eligible Doodlebugs
+		for (int j = 0; j < rows; j++) {
+			for (int k = 0; k < cols; k++) {
+				if ((typeid(critterGrid[j][k]) == typeid(Doodlebug *))) {
+					if (critterGrid[j][k]->getStepsSinceBreeding() <= 8) {
+						critterGrid[j][k]->breed(); // Breed all eligible Doodlebugs
+					}
+				}
+			}
+		}
+
 		// For each element of the array, find Ant pointers
-				// Breed all eligible Ants
+		for (int j = 0; j < rows; j++) {
+			for (int k = 0; k < cols; k++) {
+				if ((typeid(critterGrid[j][k]) == typeid(Ant *))) {
+					if (critterGrid[j][k]->getStepsSinceBreeding() <= 3) {
+						critterGrid[j][k]->breed(); // Breed all eligible Ants
+					}
+				}
+			}
+		}
 
 		// Print grid at end of each time step
-		critterGrid.printGrid();
+		printGrid(rows, cols, pGrid);
 	}
+
+
+	// Free memory from grid at end of time steps
+	for (int i = 0; i < rows; i++) {
+		delete[] critterGrid[i];
+	}
+
+	delete[] critterGrid;
+
+	// Free memory from Ant and Critter pointers
 
 	// Display repeat menu to ask if user would like to run again or quit
 	int choice;
@@ -83,12 +139,11 @@ int main() {
 
 		if (choice == 2) {
 			// Repeat everything above
-
 		}
 	} while (choice != 2); // Repeat unless user chooses to quit
 
-
 	return 0;
+
 }
 
 /* getChoice is a function that takes an int parameter and returns an int. It
@@ -127,4 +182,46 @@ void displayRepeatMenu() {
 	cout << "\n\tPLAY AGAIN? \n \n";
 	cout << "1. Repeat Predator-Prey Simulation by choosing 1. " << endl;
 	cout << "2. Quit the program by choosing 2." << endl;
+}
+
+/* printGrid is a void function that takes two int parameters and a quadruple
+ * Critter pointer. It prints the grid, with O representing Ants, X
+ * representing Doodlebugs, and a space representing a blank space. */
+
+void printGrid(int rows, int cols, Critter **** pGrid) {
+
+	std::cout << "- ";
+	for (int i = 0; i < cols; i++) {
+		std::cout << "- ";
+	}
+	std::cout << "- " << std::endl;
+
+	// Iterate through grid
+	for (int i = 0; i < rows; i++) {
+		std::cout << "| ";
+		for (int j = 0; j < cols; j++) {
+
+			// If critter is an Ant, print 'O'
+			if (typeid((*pGrid)[i][j]) == typeid(Ant *)) {
+				std::cout << "O ";
+			}
+
+				// Else if critter is a Doodlebug, print 'X'
+			else if (typeid((*pGrid)[i][j]) == typeid(Doodlebug *)) {
+				std::cout << "X ";
+			}
+
+				// Else no critter, print blank
+			else {
+				std::cout << "  ";
+			}
+		}
+		std::cout << "|" << std::endl;
+	}
+
+	std::cout << "- ";
+	for (int i = 0; i < cols; i++) {
+		std::cout << "- ";
+	}
+	std::cout << "- " << std::endl;
 }

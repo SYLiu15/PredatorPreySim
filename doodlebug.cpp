@@ -56,7 +56,9 @@ Breed function overrides the Critter::breed pure virtual function. It is
  Doodlebug from the grid by setting the grid location to nullptr. It returns
  true if completed.
 *******************************************************************************/
+void Doodlebug::starve() {
 
+}
 /*******************************************************************************
 										Doodlebug::getStepsSinceEating
 
