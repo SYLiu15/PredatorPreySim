@@ -17,21 +17,31 @@ protected:
 	int row;
 	int col;
 	int stepsSinceBreeding;
+	bool delete_bug;
 
 public:
+	//constructors
 	Critter();
-	Critter(int rowIn, int colIn);
-	virtual void move();
-
-	virtual void breed() {};
-
+	Critter(int, int);
+	
+	//accessors
 	int getRow() const;
 	int getCol() const;
-	void setRow(int rowIn);
-	void setCol(int colIn);
-
 	int getStepsSinceBreeding() const;
+	bool getDelete() const;
+	
+	//mutators
+	void setRow(int);
+	void setCol(int);
+	void setDelete(bool);
+	
+	//other functions
+	virtual void move() = 0;
+	virtual void breed() = 0; //this needed?
+	virtual void starve() = 0; //this needed? Rubric seems to suggest it is
 
+	
+	//what is this?
 	virtual ~Critter() = default; // Default virtual constructor
 
 };
