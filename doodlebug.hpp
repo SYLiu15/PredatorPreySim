@@ -28,6 +28,11 @@ public:
 
 	int getStepsSinceEating() const;
 
+	// For printing on board
+	char getStatus() const override {
+		return 'x';
+	}
+
 };
 
 

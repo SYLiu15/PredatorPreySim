@@ -32,6 +32,8 @@ public:
 
 	int getStepsSinceBreeding() const;
 
+	virtual char getStatus() const = 0;
+
 	virtual ~Critter() = default; // Default virtual constructor
 
 };

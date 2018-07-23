@@ -23,6 +23,11 @@ public:
 
 	//void breed() override;
 
+	// For printing on board
+	char getStatus() const override {
+		return 'o';
+	}
+
 };
 
 

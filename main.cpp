@@ -22,7 +22,7 @@ using std::cin;
 
 int getChoice(int maxChoice);
 void displayRepeatMenu();
-void printGrid(int rows, int cols, Critter**** pGrid);
+void printGrid(int rows, int cols, Critter*** critterGrid);
 
 int main() {
 	cout << "***********************************************" << endl;
@@ -57,13 +57,15 @@ int main() {
 	}
 
 	// Create pointer to grid
-	Critter ****pGrid = &critterGrid;
+	Critter ****pGrid = &critterGrid; // Triple pointer is enough, will pass
+			// by ref
 
 	// Add first ant and doodlebug
 	critterGrid[0][0] = new Ant(0,0);
 	critterGrid[0][1] = new Doodlebug(0,1);
 
-	printGrid(rows, cols, pGrid);
+	// Print initial grid with first Ants and Doodlebugs
+	printGrid(rows, cols, critterGrid);
 
 	// Prompt user for # of timesteps
 	cout << "How many timesteps would you like the simulation to run?" << endl;
@@ -117,7 +119,7 @@ int main() {
 		}
 
 		// Print grid at end of each time step
-		printGrid(rows, cols, pGrid);
+		printGrid(rows, cols, critterGrid);
 	}
 
 
@@ -188,7 +190,7 @@ void displayRepeatMenu() {
  * Critter pointer. It prints the grid, with O representing Ants, X
  * representing Doodlebugs, and a space representing a blank space. */
 
-void printGrid(int rows, int cols, Critter **** pGrid) {
+void printGrid(int rows, int cols, Critter *** critterGrid) {
 
 	std::cout << "- ";
 	for (int i = 0; i < cols; i++) {
@@ -201,14 +203,8 @@ void printGrid(int rows, int cols, Critter **** pGrid) {
 		std::cout << "| ";
 		for (int j = 0; j < cols; j++) {
 
-			// If critter is an Ant, print 'O'
-			if (typeid((*pGrid)[i][j]) == typeid(Ant *)) {
-				std::cout << "O ";
-			}
-
-				// Else if critter is a Doodlebug, print 'X'
-			else if (typeid((*pGrid)[i][j]) == typeid(Doodlebug *)) {
-				std::cout << "X ";
+			if (critterGrid[i][j] != nullptr)	{
+				std::cout << (critterGrid[i][j])->getStatus() << " ";
 			}
 
 				// Else no critter, print blank
