@@ -21,10 +21,10 @@ Critter::Critter() {
 /*******************************************************************************
 Non default constructor
 *******************************************************************************/
-Critter::Critter(int rowIn, int colIn) {
+Critter::Critter(int rowIn, int colIn, int steps) {
 	row = rowIn;
 	col = colIn;
-	stepsSinceBreeding = 0;
+	stepsSinceBreeding = steps;
 	delete_bug = false;
 }
 
@@ -52,6 +52,9 @@ void Critter::setRow(int rowIn) {
 }
 void Critter::setCol(int colIn) {
 	col = colIn;
+}
+int Critter::setStepsSinceBreeding(int steps) {
+	stepsSinceBreeding = steps;
 }
 void Critter::setDelete(bool d) {
 	delete_bug = d;
