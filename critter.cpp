@@ -9,7 +9,6 @@
 *******************************************************************************/
 
 #include "critter.hpp"
-#include <cstdlib> // Header file needed for random number generation
 
 /*******************************************************************************
 Default constructor
