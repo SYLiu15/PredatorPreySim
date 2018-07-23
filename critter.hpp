@@ -40,8 +40,11 @@ public:
 	virtual void breed() = 0; //this needed?
 	virtual void starve() = 0; //this needed? Rubric seems to suggest it is
 
-	
-	//what is this?
+  
+	//what is this for?
+	virtual char getStatus() const = 0;
+  
+  //what is this?
 	virtual ~Critter() = default; // Default virtual constructor
 
 };
