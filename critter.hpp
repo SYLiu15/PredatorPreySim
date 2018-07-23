@@ -22,7 +22,7 @@ protected:
 public:
 	//constructors
 	Critter();
-	Critter(int, int);
+	Critter(int, int, int);
 	
 	//accessors
 	int getRow() const;
@@ -33,6 +33,7 @@ public:
 	//mutators
 	void setRow(int);
 	void setCol(int);
+	void setStepsSinceBreeding(int);
 	void setDelete(bool);
 	
 	//other functions
