@@ -22,7 +22,7 @@ public:
 	Doodlebug(int rowIn, int colIn); // 2-param constructor
 
 	//void move() override;
-	//void breed() override;
+	void breed(Critter ***);
 
 	void starve();
 

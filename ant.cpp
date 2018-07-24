@@ -17,8 +17,13 @@ using std::vector;
 /*******************************************************************************
 	TESTING   TESTING   TESTING   TESTING   TESTING   TESTING   TESTING
 									Ant::breed
-Breed function overrides the Critter::breed pure virtual function. It is
- called when the Ant's stepsSinceBreeding count is >= 3.
+ Breed function overrides the Critter::breed pure virtual function. It is
+ called when the Ant's stepsSinceBreeding count is >= 3. The function intializes
+ a char vector that will hold chars to specify direction in which the ant breeds.
+ The logic tests for empty adjacent cells above, below, to the right and left of
+ the ant, and adds U, D, R, and L chars to the vetor. The fucntion then rendomly
+ chooses one of these chars and creates a new ant object into the corrsponding 
+cell. If there are no empty adjacent cells then nothing happens.
 *******************************************************************************/
 void Ant::breed(Critter*** critterBoard)
 {
