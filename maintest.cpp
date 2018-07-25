@@ -42,7 +42,6 @@ int main() {
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
 				if (array[i][j] != nullptr && array[i][j]->getAlreadyMoved() == false) {
-					cout << "Got here" << endl;
 					array[i][j]->move(&array, arrayLength, arrayWidth);
 				}
 			}
