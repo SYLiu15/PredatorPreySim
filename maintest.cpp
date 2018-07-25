@@ -54,9 +54,8 @@ int main() {
 				}
 			}
 		}
-		
-	//then move ants
-	while (value == 1) {
+
+		//then move ants
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
 				if ((array[i][j]->getStatus() == 'O') && (array[i][j]->getAlreadyMoved() == false)) {
@@ -64,9 +63,7 @@ int main() {
 				}
 			}
 		}
-	}
-
-			
+	
 		//print board
 		print_board(array, arrayLength, arrayWidth);
 		

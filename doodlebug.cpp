@@ -74,7 +74,7 @@ except instead of checking for a nullptr, it checks for an Ant pointer in
 adjacent locations. If it finds one, it calls the Critter::condition_rand
 function to choose a direction and return it. If not, it returns 4.
  *******************************************************************************/
-int Doodlebug::check_ant(Critter ***Grid, int maxRows, int maxCols) {
+int Doodlebug::check_ants(Critter ***Grid, int maxRows, int maxCols) {
 	bool up, down, left, right;
 	//check if at top of board. If false, then check if ant is present
 	if (row != 0 && (Grid)[row - 1][col]->getStatus() == 'o') {
@@ -186,10 +186,8 @@ It calls the Critter::move function and depending on the random direction,
 will then call the overridden functions of move_up, move_right, move_down, or
 move_left.
 *******************************************************************************/
-
-
 void Doodlebug::noEat_move(Critter ***Grid, int maxRows, int maxCols) {
-	Critter::move;
+	Critter::move(Grid, maxRows, maxCols);
 	stepsSinceEating++;
 	stepsSinceBreeding++;
 }
@@ -266,9 +264,9 @@ Breed function overrides the Critter::breed pure virtual function. It is
  Doodlebug from the grid by setting the grid location to nullptr. It returns
  true if completed.
 *******************************************************************************/
-void Doodlebug::starve() {
+//void Doodlebug::starve() {
 
-}
+//}
 /*******************************************************************************
 			Doodlebug::getStepsSinceEating
 Doodlebug::getStepsSinceEating is a function without parameters that returns the

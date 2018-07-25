@@ -36,8 +36,6 @@ public:
 	void move_down(Critter ***Grid) override;
 	void move_left(Critter ***Grid) override;
 		
-
-	void move() override;
 	//void breed() override;
 
 	//void starve();
