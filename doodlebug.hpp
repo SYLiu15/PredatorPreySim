@@ -21,12 +21,30 @@ public:
 	Doodlebug(); // Default constructor
 	Doodlebug(int rowIn, int colIn); // 2-param constructor
 
+	void move(Critter ***Grid, int maxRows, int maxCols);
+	int check_ant(Critter ***Grid, int maxRows, int maxCols);
+	int condition_rand(bool up, bool right, bool down, bool left); // Could be moved to Critter
+	void eat_up(Critter ***Grid);
+	void eat_right(Critter ***Grid);
+	void eat_down(Critter ***Grid);
+	void eat_left(Critter ***Grid);
+
+	void noEat_move(Critter ***Grid, int maxRows, int maxCols); 
+
+	int check_bounds(Critter ***Grid, int maxRows, int maxCols) // Could be moved to Critter
+
+	void move_up(Critter ***Grid);
+	void move_right(Critter ***Grid);
+	void move_down(Critter ***Grid);
+	void move_left(Critter ***Grid);
+		
+
 	//void move() override;
 	//void breed() override;
 
-	void starve();
+//	void starve();
 
-	int getStepsSinceEating() const;
+//	int getStepsSinceEating() const;
 
 	// For printing on board
 	char getStatus() const override {
