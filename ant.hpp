@@ -31,6 +31,8 @@ public:
 	//other functions
 	virtual void move(Critter ****, int, int);
 	int check_bounds(Critter ****Grid, int maxRows, int maxCols);
+	int condition_rand(bool up, bool right, bool down, bool left);
+	
 	void move_up(Critter ****Grid);
 	void move_right(Critter ****Grid);
 	void move_down(Critter ****Grid);

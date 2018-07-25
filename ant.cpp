@@ -9,15 +9,16 @@
 *******************************************************************************/
 #include "ant.hpp"
 
-void Ant::move(Critter ****Grid, int maxRows, int maxCols) { //This function should be called using someant.move(&Grid, rows, cols)
-	//in order to loop through the array properly, the rows and cols should be passed along with the grid
-	//assuming actual array index range is from 0 - maxRows-1, 0 - maxCols-1
+void Ant::move(Critter ****Grid, int maxRows, int maxCols) {
+	//This function should be called using someant.move(&Grid, maxRows, maxCols)
+	//array index range is from 0 - maxRows-1, 0 - maxCols-1
 	
-	// 0 represents North; 1 East; 2 South; 3 West
+	//Directions:
+	//0 Up; 1 Right; 2 Down; 3 Left
 	
-	int direction = rand()%4;
-	//direction = check_bounds(Grid, maxRows, maxCols);
-	//cout << "this ran" << endl;
+	//this function selects a direction based on board conditions
+	int direction = check_bounds(Grid, maxRows, maxCols);
+	
 	switch(direction) {
 		case 0:
 			move_up(Grid);
@@ -35,25 +36,70 @@ void Ant::move(Critter ****Grid, int maxRows, int maxCols) { //This function sho
 }
 
 int Ant::check_bounds(Critter ****Grid, int maxRows, int maxCols) {
-	//LOGIC FOR BOUNDS CHECKING
-	//given getRow() and getCol(), check if:
-		//row = maxRows
-		//row = 0
-		//col = maxCols
-		//col = 0
-	//if any are true, the case is a boundary condition, respective move is not allowed
+	bool up, down, left, right;
+	//check if at top of board. If false, then check for empty space
+	if (row != 0 && (*Grid)[row - 1][col] == nullptr) {
+		up = true;
+	}
+	else {
+		up = false;
+	}
+	//check if at bottom of board. If false, then check for empty space
+	if (row != maxRows - 1 && (*Grid)[row + 1][col] == nullptr) {
+		down = true;
+	}
+	else {
+		down = false;
+	}
+	//check if at left of board. If false, then check for empty space
+	if (col != 0 && (*Grid)[row][col - 1] == nullptr) {
+		left = true;
+	}
+	else {
+		left = false;
+	}
+	//check if at right of board. If false, then check for empty space
+	if (col != maxCols - 1 && (*Grid)[row][col + 1] == nullptr) {
+		right = true;
+	}
+	else {
+		right = false;
+	}
 	
-	//LOGIC FOR CRITTER CHECKING
-	//given getRow() and getCol(), check if:
-		//row + 1 is occupied
-		//row - 1 is occupied
-		//col + 1 is occupied
-		//col - 1 is occupied
-	//if any are true, the critter cannot move in those directions
+	//based on which directions are available, generate a random number
+	//if no options are available, return a value where no case exists (ant does nothing)
+	if (up == false && right == false && down == false && left == false) {
+		return 4;
+	}
+	else {
+		int direction = condition_rand(up, right, down, left);
+		return direction;
+	}
 }
-		
-		
-//separating each direction movement into separate functions will make it modular and reusable elsewhere
+
+int Ant::condition_rand(bool up, bool right, bool down, bool left) {
+	int value = rand()%4;
+	
+	//verify that the random number is an available movement
+	if (value == 0 && up == true) {
+		return value;
+	}
+	else if (value == 1 && right == true) {
+		return value;
+	}
+	else if (value == 2 && down == true) {
+		return value;
+	}
+	else if (value == 3 && left == true) {
+		return value;
+	}
+	else {
+		//if random number is not an available movement, use recursion to generate a new random number until
+		//condition is met
+		return condition_rand(up, right, down, left);
+	}
+}
+
 void Ant::move_up(Critter ****Grid) {
 	stepsSinceBreeding++;
 	(*Grid)[row - 1][col] = new Ant(row - 1, col, stepsSinceBreeding, true);

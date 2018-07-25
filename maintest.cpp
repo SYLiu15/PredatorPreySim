@@ -17,7 +17,7 @@ void reset_flags(Critter ****array, int arrayLength, int arrayWidth);
 int main() {
 	srand(time(NULL));
 	
-	int arrayLength = 15, arrayWidth = 15;
+	int arrayLength = 5, arrayWidth = 5;
 	
 	//initialize array of Critter pointers
 	Critter ***array = new Critter**[arrayLength];
@@ -29,14 +29,20 @@ int main() {
 	}
 	
 	//create single ant
-	array[7][7] = new Ant(7,7,0,false);
+	array[2][2] = new Ant(2,2,0,false);
 	
 	//run simulation, repeat until user types 'n'
 	int value = 1;
+	//print starting location
+	print_board(array, arrayLength, arrayWidth);
+	cout << "Press enter to continue: ";
+	cin.ignore(256,'\n');
+	
 	while (value == 1) {
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
 				if (array[i][j] != nullptr && array[i][j]->getAlreadyMoved() == false) {
+					cout << "Got here" << endl;
 					array[i][j]->move(&array, arrayLength, arrayWidth);
 				}
 			}
@@ -50,7 +56,7 @@ int main() {
 		
 		//prompt for continue
 		string input = "";
-		cout << "continue?" << endl;
+		cout << "Press enter to continue (n to quit): ";
 		getline(cin, input);
 		if (input == "n") {
 			value = 0;
@@ -69,6 +75,7 @@ int main() {
 }
 
 void print_board(Critter ***array, int arrayLength, int arrayWidth) {
+	cout << endl;
 	for (int i = 0; i < arrayLength+2; i++) {
 		cout << "-";
 	}
