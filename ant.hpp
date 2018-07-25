@@ -11,23 +11,31 @@
 #ifndef ANT_HPP
 #define ANT_HPP
 
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
+
+#include <cstdlib>
+
 #include "critter.hpp"
 
 class Ant : public Critter{
 public:
-	// Default constructor calls Critter default constructor
+	// Default constructor
 	Ant() : Critter() {};
 
-	// 2-param constructor calls Critter 2-param constructor
-	Ant(int rowIn, int colIn) : Critter(rowIn, colIn) {};
-
-	//void breed() override;
-
-	// For printing on board
-	char getStatus() const override {
-		return 'o';
-	}
-
+	// Non default constructor
+	Ant(int rowIn, int colIn, int steps, bool am) : Critter(rowIn, colIn, steps, am) {};
+	
+	//other functions
+	//move functions called using inherited move() from Critter;
+	virtual void move_up(Critter ***Grid);
+	virtual void move_right(Critter ***Grid);
+	virtual void move_down(Critter ***Grid);
+	virtual void move_left(Critter ***Grid);
+	
+	//virtual void breed();
 };
 
 

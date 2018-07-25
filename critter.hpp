@@ -11,42 +11,46 @@
 #ifndef CRITTER_HPP
 #define CRITTER_HPP
 
+#include <cstdlib>
 
 class Critter {
 protected:
 	int row;
 	int col;
 	int stepsSinceBreeding;
-	bool delete_bug;
+	bool already_moved;
 
 public:
 	//constructors
 	Critter();
-	Critter(int, int, int);
+	Critter(int, int, int, bool);
 	
 	//accessors
 	int getRow() const;
 	int getCol() const;
 	int getStepsSinceBreeding() const;
-	bool getDelete() const;
+	bool getAlreadyMoved() const;
 	
 	//mutators
 	void setRow(int);
 	void setCol(int);
-	void setStepsSinceBreeding(int);
-	void setDelete(bool);
+	void setAlreadyMoved(bool am);
 	
 	//other functions
-	virtual void move() = 0;
-	virtual void breed() = 0; //this needed?
-	virtual void starve() = 0; //this needed? Rubric seems to suggest it is
-
-  
-	//what is this for?
-	virtual char getStatus() const = 0;
-  
-  //what is this?
-	virtual ~Critter() = default; // Default virtual constructor
+	virtual void move(Critter ***, int, int);
+	
+	int check_bounds(Critter ***Grid, int maxRows, int maxCols);
+	int condition_rand(bool up, bool right, bool down, bool left);
+	
+	virtual void move_up(Critter ***Grid) = 0;
+	virtual void move_right(Critter ***Grid) = 0;
+	virtual void move_down(Critter ***Grid) = 0;
+	virtual void move_left(Critter ***Grid) = 0;
+	
+	//virtual void breed() = 0;
+	//virtual void starve() = 0;
+	
+	//virtual ~Critter() = default; // Default virtual constructor
 
 };
 
