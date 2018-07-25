@@ -50,7 +50,7 @@ public:
 	//virtual void breed() = 0;
 	//virtual void starve() = 0;
 	
-	//virtual ~Critter() = default; // Default virtual constructor
+	virtual ~Critter() = default; // Default virtual destructor
 
 };
 
