@@ -131,7 +131,7 @@ void Doodlebug::eat_up(Critter ***Grid) {
 	(Grid)[row - 1][col] = new Doodlebug(row - 1, col, stepsSinceBreeding, true);
 	(Grid)[row][col] = nullptr;
 	delete this;
-
+}
 	
 /*******************************************************************************
 				Doodlebug::eat_right

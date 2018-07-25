@@ -21,8 +21,8 @@ public:
 	Doodlebug(); // Default constructor
 	Doodlebug(int rowIn, int colIn, int stpes, bool am); 
 
-	void move(Critter ***Grid, int maxRows, int maxCols) override;
-	int check_ant(Critter ***Grid, int maxRows, int maxCols);
+	void move(Critter ***, int , int) override;
+	int check_ants(Critter ***Grid, int maxRows, int maxCols);
 
 	void eat_up(Critter ***Grid);
 	void eat_right(Critter ***Grid);

@@ -64,6 +64,7 @@ int main() {
 				}
 			}
 		}
+	}
 
 			
 		//print board
@@ -89,6 +90,8 @@ int main() {
 		delete [] array[i];
 	}
 	delete [] array;
+
+	return 0;
 	
 }
 
