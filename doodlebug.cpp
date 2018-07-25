@@ -257,6 +257,34 @@ Breed function overrides the Critter::breed pure virtual function. It is
  stepsSinceBreed variable to 0. It returns false if the Doodlebug is unable
  to breed.
 *******************************************************************************/
+void Doodlebug::breed(Critter*** Grid, int maxRows, int maxCols)
+{
+	if (stepsSinceBreeding >= 8)
+	{
+		int choice = check_bounds(Grid, maxRows, maxCols);
+
+		switch (choice)
+		{
+		case 0:
+			Grid[row - 1][col] = new Doodlebug(row - 1, col, 0, true);
+			stepsSinceBreeding = 0;
+			break;
+		case 1:
+			Grid[row][col + 1] = new Doodlebug(row, col + 1, 0, true);
+			stepsSinceBreeding = 0;
+			break;
+		case 2:
+			Grid[row + 1][col] = new Doodlebug(row + 1, col, 0, true);
+			stepsSinceBreeding = 0;
+			break;
+		case 3:
+			Grid[row][col - 1] = new Doodlebug(row, col - 1, 0, true);
+			stepsSinceBreeding = 0;
+			break;
+		}
+	}
+}
+
 
 /*******************************************************************************
 			Doodlebug::starve

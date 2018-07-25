@@ -39,7 +39,7 @@ public:
 		return 'O';
 	}
 	
-	virtual void breed();
+	void breed(Critter***, int, int);
 };
 
 

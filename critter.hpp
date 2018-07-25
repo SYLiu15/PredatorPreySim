@@ -49,7 +49,7 @@ public:
 
 	virtual char getStatus() const = 0; // Flag for distinguishing pointers
 	
-	//virtual void breed() = 0;
+	virtual void breed(Critter***, int, int) = 0;
 	//virtual void starve() = 0;
 	
 	virtual ~Critter() = default; // Default virtual destructor

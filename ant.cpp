@@ -55,8 +55,35 @@ void Ant::move_left(Critter ***Grid) {
 
 
 /*******************************************************************************
-	INCOMPLETE 	INCOMPLETE	INCOMPLETE	INCOMPLETE	INCOMPLETE	INCOMPLETE
 									Ant::breed
 Breed function overrides the Critter::breed pure virtual function. It is
  called when the Ant's stepsSinceBreeding count is >= 3.
 *******************************************************************************/
+void Ant::breed(Critter ***Grid, int maxRows, int maxCols)
+{
+	if (stepsSinceBreeding >= 3)
+	{
+		int choice = check_bounds(Grid, maxRows, maxCols);
+
+		switch (choice)
+		{
+		case 0:
+			Grid[row - 1][col] = new Ant(row - 1, col, 0, true);
+			stepsSinceBreeding = 0;
+			break;
+		case 1:
+			Grid[row][col + 1] = new Ant(row, col + 1, 0, true);
+			stepsSinceBreeding = 0;
+			break;
+		case 2:
+			Grid[row + 1][col] = new Ant(row + 1, col, 0, true);
+			stepsSinceBreeding = 0;
+			break;
+		case 3:
+			Grid[row][col - 1] = new Ant(row, col - 1, 0, true);
+			stepsSinceBreeding = 0;
+			break;
+		}
+	}
+}
+
