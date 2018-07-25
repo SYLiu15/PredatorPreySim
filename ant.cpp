@@ -57,28 +57,24 @@ int Ant::check_bounds(Critter ****Grid, int maxRows, int maxCols) {
 void Ant::move_up(Critter ****Grid) {
 	stepsSinceBreeding++;
 	(*Grid)[row - 1][col] = new Ant(row - 1, col, stepsSinceBreeding, true);
-	//delete_bug = true;
 	(*Grid)[row][col] = nullptr;
 	delete this;
 }
 void Ant::move_right(Critter ****Grid) {
 	stepsSinceBreeding++;
 	(*Grid)[row][col + 1] = new Ant(row, col + 1, stepsSinceBreeding, true);
-	//delete_bug = true;
 	(*Grid)[row][col] = nullptr;
 	delete this;
 }
 void Ant::move_down(Critter ****Grid) {
 	stepsSinceBreeding++;
 	(*Grid)[row + 1][col] = new Ant(row + 1, col, stepsSinceBreeding, true);
-	//delete_bug = true;
 	(*Grid)[row][col] = nullptr;
 	delete this;
 }
 void Ant::move_left(Critter ****Grid) {
 	stepsSinceBreeding++;
 	(*Grid)[row][col - 1] = new Ant(row, col - 1, stepsSinceBreeding, true);
-	//delete_bug = true;
 	(*Grid)[row][col] = nullptr;
 	delete this;
 }
