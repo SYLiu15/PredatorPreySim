@@ -17,36 +17,32 @@ protected:
 	int row;
 	int col;
 	int stepsSinceBreeding;
-	bool delete_bug;
+	bool already_moved;
 
 public:
 	//constructors
 	Critter();
-	Critter(int, int, int);
+	Critter(int, int, int, bool);
 	
 	//accessors
 	int getRow() const;
 	int getCol() const;
 	int getStepsSinceBreeding() const;
-	bool getDelete() const;
+	bool getAlreadyMoved() const;
 	
 	//mutators
 	void setRow(int);
 	void setCol(int);
-	void setStepsSinceBreeding(int);
-	void setDelete(bool);
+	void setAlreadyMoved(bool am);
 	
 	//other functions
-	virtual void move() = 0;
-	virtual void breed() = 0; //this needed?
-	virtual void starve() = 0; //this needed? Rubric seems to suggest it is
+	virtual void move(Critter ****, int, int) = 0;
+	//virtual void breed() = 0; //this needed?
+	//virtual void starve() = 0; //this needed? Rubric seems to suggest it is
 
-  
-	//what is this for?
-	virtual char getStatus() const = 0;
-  
-  //what is this?
-	virtual ~Critter() = default; // Default virtual constructor
+	
+	//what is this?
+	//virtual ~Critter() = default; // Default virtual constructor
 
 };
 
