@@ -36,9 +36,8 @@ int main() {
 	while (value == 1) {
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
-				if (array[i][j] != nullptr) {
-					if (array[i][j]->getAlreadyMoved() == false)
-						array[i][j]->move(&array, arrayLength, arrayWidth);
+				if (array[i][j] != nullptr && array[i][j]->getAlreadyMoved() == false) {
+					array[i][j]->move(&array, arrayLength, arrayWidth);
 				}
 			}
 		}
