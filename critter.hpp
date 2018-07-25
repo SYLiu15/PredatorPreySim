@@ -46,6 +46,8 @@ public:
 	virtual void move_right(Critter ***Grid) = 0;
 	virtual void move_down(Critter ***Grid) = 0;
 	virtual void move_left(Critter ***Grid) = 0;
+
+	virtual char getStatus() const = 0; // Flag for distinguishing pointers
 	
 	//virtual void breed() = 0;
 	//virtual void starve() = 0;

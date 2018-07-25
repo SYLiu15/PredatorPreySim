@@ -46,7 +46,7 @@ public:
 
 	// For printing on board
 	char getStatus() const override {
-		return 'x';
+		return 'X';
 	}
 
 };
