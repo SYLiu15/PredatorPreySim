@@ -34,6 +34,10 @@ public:
 	virtual void move_right(Critter ***Grid);
 	virtual void move_down(Critter ***Grid);
 	virtual void move_left(Critter ***Grid);
+
+	char getStatus() const override {
+		return 'O';
+	}
 	
 	//virtual void breed();
 };
