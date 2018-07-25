@@ -19,21 +19,34 @@ private:
 
 public:
 	Doodlebug(); // Default constructor
-	Doodlebug(int rowIn, int colIn); // 2-param constructor
+	Doodlebug(int rowIn, int colIn, int stpes, bool am); 
 
-	//void move() override;
+	void move(Critter ***, int , int) override;
+	int check_ants(Critter ***Grid, int maxRows, int maxCols);
+
+	void eat_up(Critter ***Grid);
+	void eat_right(Critter ***Grid);
+	void eat_down(Critter ***Grid);
+	void eat_left(Critter ***Grid);
+
+	void noEat_move(Critter ***Grid, int maxRows, int maxCols); 
+
+	void move_up(Critter ***Grid) override;
+	void move_right(Critter ***Grid) override;
+	void move_down(Critter ***Grid) override;
+	void move_left(Critter ***Grid) override;
+		
 	//void breed() override;
 
-	void starve();
+	//void starve();
 
 	int getStepsSinceEating() const;
 
 	// For printing on board
 	char getStatus() const override {
-		return 'x';
+		return 'X';
 	}
 
 };
 
-
-#endif //GROUP_PROJECT_DOODLEBUG_HPP
+#endif //DOODLEBUG_HPP

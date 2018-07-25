@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 using std::cout;
 using std::cin;
 using std::endl;
@@ -8,8 +9,8 @@ using std::string;
 
 #include "ant.hpp"
 #include "critter.hpp"
+#include "doodlebug.hpp"
 
-void print_board(Critter ***);
 void print_board(Critter ***array, int arrayLength, int arrayWidth);
 void reset_flags(Critter ***array, int arrayLength, int arrayWidth);
 
@@ -34,6 +35,9 @@ int main() {
 	array[1][2] = new Ant(1,2,0,false);
 	array[0][2] = new Ant(0,2,0,false);
 	array[2][0] = new Ant(2,0,0,false);
+
+	//create new doodlebug
+	array[4][4] = new Doodlebug(4,4,0,false);
 	
 	//run simulation, repeat until user types 'n'
 	int value = 1;
@@ -42,15 +46,25 @@ int main() {
 	cout << "Press enter to continue: ";
 	cin.ignore(256,'\n');
 	
+	//move doodlebugs first
 	while (value == 1) {
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
-				if (array[i][j] != nullptr && array[i][j]->getAlreadyMoved() == false) {
+				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'X') && (array[i][j]->getAlreadyMoved() == false)) {
 					array[i][j]->move(array, arrayLength, arrayWidth);
 				}
 			}
 		}
-		
+
+		//then move ants
+		for (int i = 0; i < arrayLength; i++) {
+			for (int j = 0; j < arrayWidth; j++) {
+				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'O') && (array[i][j]->getAlreadyMoved() == false)) {
+					array[i][j]->move(array, arrayLength, arrayWidth);
+				}
+			}
+		}
+	
 		//print board
 		print_board(array, arrayLength, arrayWidth);
 		
@@ -74,6 +88,8 @@ int main() {
 		delete [] array[i];
 	}
 	delete [] array;
+
+	return 0;
 	
 }
 
@@ -90,7 +106,7 @@ void print_board(Critter ***array, int arrayLength, int arrayWidth) {
 				cout << " ";
 			}
 			else {
-				cout << "*";
+				cout << array[i][j]->getStatus();
 			}
 		}
 		cout << "|" << endl;
