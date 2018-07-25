@@ -29,14 +29,11 @@ public:
 	Ant(int rowIn, int colIn, int steps, bool am) : Critter(rowIn, colIn, steps, am) {};
 	
 	//other functions
-	virtual void move(Critter ****, int, int);
-	int check_bounds(Critter ****Grid, int maxRows, int maxCols);
-	int condition_rand(bool up, bool right, bool down, bool left);
-	
-	void move_up(Critter ****Grid);
-	void move_right(Critter ****Grid);
-	void move_down(Critter ****Grid);
-	void move_left(Critter ****Grid);
+	//move functions called using inherited move() from Critter;
+	virtual void move_up(Critter ***Grid);
+	virtual void move_right(Critter ***Grid);
+	virtual void move_down(Critter ***Grid);
+	virtual void move_left(Critter ***Grid);
 	
 	//virtual void breed();
 };

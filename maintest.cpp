@@ -11,7 +11,7 @@ using std::string;
 
 void print_board(Critter ***);
 void print_board(Critter ***array, int arrayLength, int arrayWidth);
-void reset_flags(Critter ****array, int arrayLength, int arrayWidth);
+void reset_flags(Critter ***array, int arrayLength, int arrayWidth);
 
 
 int main() {
@@ -30,6 +30,10 @@ int main() {
 	
 	//create single ant
 	array[2][2] = new Ant(2,2,0,false);
+	array[2][3] = new Ant(2,3,0,false);
+	array[1][2] = new Ant(1,2,0,false);
+	array[0][2] = new Ant(0,2,0,false);
+	array[2][0] = new Ant(2,0,0,false);
 	
 	//run simulation, repeat until user types 'n'
 	int value = 1;
@@ -42,7 +46,7 @@ int main() {
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
 				if (array[i][j] != nullptr && array[i][j]->getAlreadyMoved() == false) {
-					array[i][j]->move(&array, arrayLength, arrayWidth);
+					array[i][j]->move(array, arrayLength, arrayWidth);
 				}
 			}
 		}
@@ -51,13 +55,13 @@ int main() {
 		print_board(array, arrayLength, arrayWidth);
 		
 		//reset already_moved flags back to false after all moves made
-		reset_flags(&array, arrayLength, arrayWidth);
+		reset_flags(array, arrayLength, arrayWidth);
 		
 		//prompt for continue
 		string input = "";
-		cout << "Press enter to continue (n to quit): ";
+		cout << "Press enter to continue (q to quit): ";
 		getline(cin, input);
-		if (input == "n") {
+		if (input == "q") {
 			value = 0;
 		}
 	}
@@ -97,11 +101,11 @@ void print_board(Critter ***array, int arrayLength, int arrayWidth) {
 	cout << endl;
 }
 
-void reset_flags(Critter ****array, int arrayLength, int arrayWidth) {
+void reset_flags(Critter ***array, int arrayLength, int arrayWidth) {
 	for (int i = 0; i < arrayLength; i++) {
 		for (int j = 0; j < arrayWidth; j++) {
-			if ((*array)[i][j] != nullptr) {
-				(*array)[i][j]->setAlreadyMoved(false);
+			if (array[i][j] != nullptr) {
+				array[i][j]->setAlreadyMoved(false);
 			}
 		}
 	}

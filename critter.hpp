@@ -11,6 +11,7 @@
 #ifndef CRITTER_HPP
 #define CRITTER_HPP
 
+#include <cstdlib>
 
 class Critter {
 protected:
@@ -36,12 +37,19 @@ public:
 	void setAlreadyMoved(bool am);
 	
 	//other functions
-	virtual void move(Critter ****, int, int) = 0;
-	//virtual void breed() = 0; //this needed?
-	//virtual void starve() = 0; //this needed? Rubric seems to suggest it is
-
+	virtual void move(Critter ***, int, int);
 	
-	//what is this?
+	int check_bounds(Critter ***Grid, int maxRows, int maxCols);
+	int condition_rand(bool up, bool right, bool down, bool left);
+	
+	virtual void move_up(Critter ***Grid) = 0;
+	virtual void move_right(Critter ***Grid) = 0;
+	virtual void move_down(Critter ***Grid) = 0;
+	virtual void move_left(Critter ***Grid) = 0;
+	
+	//virtual void breed() = 0;
+	//virtual void starve() = 0;
+	
 	//virtual ~Critter() = default; // Default virtual constructor
 
 };
