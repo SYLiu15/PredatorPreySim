@@ -77,28 +77,29 @@ function to choose a direction and return it. If not, it returns 4.
 int Doodlebug::check_ants(Critter ***Grid, int maxRows, int maxCols) {
 	bool up, down, left, right;
 	//check if at top of board. If false, then check if ant is present
-	if (row != 0 && (Grid)[row - 1][col]->getStatus() == 'o') {
+	if ((Grid[row - 1][col] != nullptr) && row != 0 && Grid[row - 1][col]->getStatus() == 'O') {
 		up = true;
 	}
 	else {
 		up = false;
 	}
 	//check if at bottom of board. If false, then check if ant is present
-	if (row != maxRows - 1 && (Grid)[row + 1][col]->getStatus() == 'o') {
+	if ((Grid[row][col] != nullptr) && row != maxRows - 1 && Grid[row][col]->getStatus() == 'O') {
 		down = true;
 	}
 	else {
 		down = false;
 	}
 	//check if at left of board. If false, then check if ant is present
-	if (col != 0 && (Grid)[row][col - 1]->getStatus() == 'o') {
+	if ((Grid[row][col - 1] != nullptr) && col != 0 && Grid[row][col - 1]->getStatus() == 'O') {
 		left = true;
 	}
 	else {
+
 		left = false;
 	}
 	//check if at right of board. If false, then check if ant is present
-	if (col != maxCols - 1 && (Grid)[row][col + 1]->getStatus() == 'o') {
+	if ((Grid[row][col + 1] != nullptr) && col != maxCols - 1 && Grid[row][col + 1]->getStatus() == 'O') {
 		right = true;
 	}
 	else {

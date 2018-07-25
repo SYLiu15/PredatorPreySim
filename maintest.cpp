@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 using std::cout;
 using std::cin;
 using std::endl;
@@ -49,7 +50,7 @@ int main() {
 	while (value == 1) {
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
-				if ((array[i][j]->getStatus() == 'X') && (array[i][j]->getAlreadyMoved() == false)) {
+				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'X') && (array[i][j]->getAlreadyMoved() == false)) {
 					array[i][j]->move(array, arrayLength, arrayWidth);
 				}
 			}
@@ -58,7 +59,7 @@ int main() {
 		//then move ants
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
-				if ((array[i][j]->getStatus() == 'O') && (array[i][j]->getAlreadyMoved() == false)) {
+				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'O') && (array[i][j]->getAlreadyMoved() == false)) {
 					array[i][j]->move(array, arrayLength, arrayWidth);
 				}
 			}
