@@ -93,14 +93,14 @@ int Doodlebug::check_ants(Critter ***Grid, int maxRows, int maxCols) {
 		up = false;
 	}
 	//check if at bottom of board. If false, then check if ant is present
-	if ((Grid[row][col] != nullptr) && row != maxRows - 1 && Grid[row][col]->getStatus() == 'O') {
+	if (row != maxRows-1 && Grid[row + 1][col] != nullptr && Grid[row + 1][col]->getStatus() == 'O') {
 		down = true;
 	}
 	else {
 		down = false;
 	}
 	//check if at left of board. If false, then check if ant is present
-	if ((Grid[row][col - 1] != nullptr) && col != 0 && Grid[row][col - 1]->getStatus() == 'O') {
+	if (col != 0 && Grid[row][col - 1] != nullptr && Grid[row][col - 1]->getStatus() == 'O') {
 		left = true;
 	}
 	else {
@@ -108,7 +108,7 @@ int Doodlebug::check_ants(Critter ***Grid, int maxRows, int maxCols) {
 		left = false;
 	}
 	//check if at right of board. If false, then check if ant is present
-	if ((Grid[row][col + 1] != nullptr) && col != maxCols - 1 && Grid[row][col + 1]->getStatus() == 'O') {
+	if (col != maxCols - 1 && Grid[row][col + 1] != nullptr && Grid[row][col + 1]->getStatus() == 'O') {
 		right = true;
 	}
 	else {
@@ -211,12 +211,23 @@ location, and removes the old one.
 *******************************************************************************/
 void Doodlebug::move_up(Critter ***Grid) {
 	//stepsSinceBreeding++;
-	(Grid)[row - 1][col] = new Doodlebug(row - 1, col, stepsSinceBreeding, stepsSinceEating, true);
-	if(dynamic_cast<Doodlebug *>((Grid)[row-1][col])->getStepsSinceEating() >= 3){
+	//(Grid)[row - 1][col] = new Doodlebug(row - 1, col, stepsSinceBreeding, stepsSinceEating, true);
+	/*if(dynamic_cast<Doodlebug *>((Grid)[row-1][col])->getStepsSinceEating() >= 3){
 		(Grid)[row-1][col]->starve(Grid);
+	}*/
+
+	if (stepsSinceEating >= 3) {
+		starve(Grid);
 	}
-	(Grid)[row][col] = nullptr;
-	delete this;
+
+	else
+	{
+		(Grid)[row - 1][col] = new Doodlebug(row - 1, col, stepsSinceBreeding, stepsSinceEating, true);
+		(Grid)[row][col] = nullptr;
+		delete this;
+	}
+	//(Grid)[row][col] = nullptr;
+	//delete this;
 }
 
 /*******************************************************************************
@@ -227,12 +238,24 @@ location, and removes the old one.
 *******************************************************************************/
 void Doodlebug::move_right(Critter ***Grid) {
 	//stepsSinceBreeding++;
-	(Grid)[row][col + 1] = new Doodlebug(row, col + 1, stepsSinceBreeding, stepsSinceEating, true);
-	if(dynamic_cast<Doodlebug *>((Grid)[row][col+1])->getStepsSinceEating() >= 3){
+	//(Grid)[row][col + 1] = new Doodlebug(row, col + 1, stepsSinceBreeding, stepsSinceEating, true);
+	/*if(dynamic_cast<Doodlebug *>((Grid)[row][col+1])->getStepsSinceEating() >= 3){
 		(Grid)[row][col+1]->starve(Grid);
+	}*/
+
+	if(stepsSinceEating >= 3)
+	{
+		starve(Grid);
 	}
-	(Grid)[row][col] = nullptr;
-	delete this;
+
+	else
+	{
+		(Grid)[row][col + 1] = new Doodlebug(row, col + 1, stepsSinceBreeding, stepsSinceEating, true);
+		(Grid)[row][col] = nullptr;
+		delete this;
+	}
+	//(Grid)[row][col] = nullptr;
+	//delete this;
 }
 
 /*******************************************************************************
@@ -243,12 +266,24 @@ location, and removes the old one.
 *******************************************************************************/
 void Doodlebug::move_down(Critter ***Grid) {
 	//stepsSinceBreeding++;
-	(Grid)[row + 1][col] = new Doodlebug(row + 1, col, stepsSinceBreeding, stepsSinceEating, true);
-	if(dynamic_cast<Doodlebug *>((Grid)[row+1][col])->getStepsSinceEating() >= 3){
+	//(Grid)[row + 1][col] = new Doodlebug(row + 1, col, stepsSinceBreeding, stepsSinceEating, true);
+	/*if(dynamic_cast<Doodlebug *>((Grid)[row+1][col])->getStepsSinceEating() >= 3){
 		(Grid)[row+1][col]->starve(Grid);
+	}*/
+
+	if (stepsSinceEating >= 3)
+	{
+		starve(Grid);
 	}
-	(Grid)[row][col] = nullptr;
-	delete this;
+
+	else
+	{
+		(Grid)[row + 1][col] = new Doodlebug(row + 1, col, stepsSinceBreeding, stepsSinceEating, true);
+		(Grid)[row][col] = nullptr;
+		delete this;
+	}
+	//(Grid)[row][col] = nullptr;
+	//delete this;
 }
 
 /*******************************************************************************
@@ -259,12 +294,24 @@ location, and removes the old one.
 *******************************************************************************/
 void Doodlebug::move_left(Critter ***Grid) {
 	//stepsSinceBreeding++;
-	(Grid)[row][col - 1] = new Doodlebug(row, col - 1, stepsSinceBreeding, stepsSinceEating, true);
-	if(dynamic_cast<Doodlebug *>((Grid)[row][col - 1])->getStepsSinceEating() >= 3){
+	//(Grid)[row][col - 1] = new Doodlebug(row, col - 1, stepsSinceBreeding, stepsSinceEating, true);
+	/*if(dynamic_cast<Doodlebug *>((Grid)[row][col - 1])->getStepsSinceEating() >= 3){
 		(Grid)[row][col - 1]->starve(Grid);
+	}*/
+
+	if (stepsSinceEating >= 3)
+	{
+		starve(Grid);
 	}
-	(Grid)[row][col] = nullptr;
-	delete this;
+
+	else
+	{
+		(Grid)[row][col - 1] = new Doodlebug(row, col - 1, stepsSinceBreeding, stepsSinceEating, true);
+		(Grid)[row][col] = nullptr;
+		delete this;
+	}
+	//(Grid)[row][col] = nullptr;
+	//delete this;
 }
 
 
