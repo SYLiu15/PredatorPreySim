@@ -175,15 +175,7 @@ void place_bugs(Critter ***array, int arrayLength, int arrayWidth) {
 	}
 	int doodle = getChoice(1, arrayLength*arrayWidth - ants);
 	
-	//initialize temp array
-	//int **intArray = new int*[arrayLength];
-	//for (int i = 0; i < arrayLength; i++) {
-	//	intArray[i] = new int[arrayWidth];
-	//	for (int j = 0; j < arrayWidth; j++) {
-	//		intArray[i][j] = 0;
-	//	}
-	//}
-	
+	//Add ants if still remaining
 	while (ants > 0) {
 		place_ants(array, arrayLength, arrayWidth);
 		ants--;
