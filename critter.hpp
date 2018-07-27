@@ -51,7 +51,6 @@ public:
 	
 	//virtual void breed() = 0;
 	virtual void starve(Critter*** Grid){};
-	//virtual int getStepsSinceEating() const{};
 	
 	virtual ~Critter() = default; // Default virtual destructor
 

@@ -9,7 +9,6 @@
 *******************************************************************************/
 
 #include "doodlebug.hpp"
-#include <iostream>
 
 /*******************************************************************************
 				Doodlebug::Doodlebug
@@ -74,7 +73,6 @@ void Doodlebug::move(Critter ***Grid, int maxRows, int maxCols) {
 			noEat_move(Grid, maxRows, maxCols);
 			break;	
 	}
-    std::cout << "Steps since eating: " << this->getStepsSinceEating();
 }
 
 /*******************************************************************************
@@ -288,7 +286,6 @@ Breed function overrides the Critter::breed pure virtual function. It is
   object.
 *******************************************************************************/
 void Doodlebug::starve(Critter ***Grid) {
-	std::cout << "Starve is called" << std::endl;
     int col = this->getCol();
     int row = this->getRow();
     (Grid)[row][col] = nullptr;
