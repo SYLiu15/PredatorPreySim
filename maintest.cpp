@@ -61,8 +61,8 @@ int main() {
 	cout << "Press enter to continue: ";
 	cin.ignore(256,'\n');
 	
-	//move doodlebugs first
 	while (value == 1) {
+		//move doodlebugs first	(starve called from move)	
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
 				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'X') && (array[i][j]->getAlreadyMoved() == false)) {
@@ -79,7 +79,23 @@ int main() {
 				}
 			}
 		}
-	
+		//then breed doodlebugs
+		for (int i = 0; i < arrayLength; i++) {
+			for (int j = 0; j < arrayWidth; j++) {
+				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'X') && (array[i][j]->getStepsSinceBreeding() >= 8)) {
+					array[i][j]->breed(array, arrayLength, arrayWidth);
+				}
+			}
+		}
+		//then breed ants
+		for (int i = 0; i < arrayLength; i++) {
+			for (int j = 0; j < arrayWidth; j++) {
+				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'O') && (array[i][j]->getStepsSinceBreeding() >= 3)) {
+					array[i][j]->breed(array, arrayLength, arrayWidth);
+				}
+			}
+		}
+
 		//print board
 		print_board(array, arrayLength, arrayWidth);
 		
