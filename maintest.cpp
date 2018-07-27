@@ -54,14 +54,22 @@ int main() {
 	//prompt for and randomize bug location
 	place_bugs(array, arrayLength, arrayWidth);
 	
-	//run simulation, repeat until user types 'n'
-	int value = 1;
+	//run simulation, repeat until user types 'q'
+	//int value = 1;
 	//print starting location
 	print_board(array, arrayLength, arrayWidth);
+
+	//prompt user for # of timesteps
+	cout << "How many timesteps would you like the simulation to run? (min-1, max-20000): " << endl;
+	int timesteps = getChoice(1,20000); // Input validation
+
 	cout << "Press enter to continue: ";
 	cin.ignore(256,'\n');
+
+	int stepCount = 0;
 	
-	while (value == 1) {
+	// removed value=1 from while condition
+	while (stepCount < timesteps) {
 		//move doodlebugs first	(starve called from move)	
 		for (int i = 0; i < arrayLength; i++) {
 			for (int j = 0; j < arrayWidth; j++) {
@@ -101,14 +109,17 @@ int main() {
 		
 		//reset already_moved flags back to false after all moves made
 		reset_flags(array, arrayLength, arrayWidth);
+
+		//increment step counter
+		stepCount++;
 		
 		//prompt for continue
-		string input = "";
-		cout << "Press enter to continue (q to quit): ";
-		getline(cin, input);
-		if (input == "q") {
-			value = 0;
-		}
+		//string input = "";
+		//cout << "Press enter to continue (q to quit): ";
+		//getline(cin, input);
+		//if (input == "q") {
+		//	value = 0;
+		//}
 	}
 	
 	//remove all data from memory
