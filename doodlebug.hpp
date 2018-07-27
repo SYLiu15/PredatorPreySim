@@ -19,7 +19,8 @@ private:
 
 public:
 	Doodlebug(); // Default constructor
-	Doodlebug(int rowIn, int colIn, int stpes, bool am); 
+	Doodlebug(int rowIn, int colIn, int stpes, bool am);
+	Doodlebug(int rowIn, int colIn, int stepsB, int stepsEat, bool am);
 
 	void move(Critter ***, int , int) override;
 	int check_ants(Critter ***Grid, int maxRows, int maxCols);
@@ -38,7 +39,7 @@ public:
 		
 	//void breed() override;
 
-	//void starve();
+	void starve(Critter*** Grid) override;
 
 	int getStepsSinceEating() const;
 
