@@ -37,7 +37,6 @@ public:
 	void move_down(Critter ***Grid) override;
 	void move_left(Critter ***Grid) override;
 		
-	//void breed() override;
 
 	void starve(Critter*** Grid) override;
 
@@ -47,6 +46,8 @@ public:
 	char getStatus() const override {
 		return 'X';
 	}
+
+	void breed(Critter***, int, int) override;
 
 };
 

@@ -30,16 +30,18 @@ public:
 	
 	//other functions
 	//move functions called using inherited move() from Critter;
-	virtual void move_up(Critter ***Grid);
-	virtual void move_right(Critter ***Grid);
-	virtual void move_down(Critter ***Grid);
-	virtual void move_left(Critter ***Grid);
+	void move_up(Critter ***Grid) override;
+	void move_right(Critter ***Grid) override;
+	void move_down(Critter ***Grid) override;
+	void move_left(Critter ***Grid) override;
 
+	//getStatus function to print and allow other functions to recognize Ant
 	char getStatus() const override {
 		return 'O';
 	}
-	
-	//virtual void breed();
+
+	//breed function overriding Critter::breed	
+	void breed(Critter***, int, int) override;
 };
 
 
