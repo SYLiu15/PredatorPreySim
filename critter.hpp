@@ -50,7 +50,8 @@ public:
 	virtual char getStatus() const = 0; // Flag for distinguishing pointers
 	
 	//virtual void breed() = 0;
-	virtual void starve(Critter*** Grid) = 0;
+	virtual void starve(Critter*** Grid){};
+	//virtual int getStepsSinceEating() const{};
 	
 	virtual ~Critter() = default; // Default virtual destructor
 

@@ -75,9 +75,6 @@ void Doodlebug::move(Critter ***Grid, int maxRows, int maxCols) {
 			break;	
 	}
     std::cout << "Steps since eating: " << this->getStepsSinceEating();
-    if(this->getStepsSinceEating() >= 3){
-        this->starve(Grid);
-    }
 }
 
 /*******************************************************************************
@@ -217,6 +214,9 @@ location, and removes the old one.
 void Doodlebug::move_up(Critter ***Grid) {
 	//stepsSinceBreeding++;
 	(Grid)[row - 1][col] = new Doodlebug(row - 1, col, stepsSinceBreeding, stepsSinceEating, true);
+	if(dynamic_cast<Doodlebug *>((Grid)[row-1][col])->getStepsSinceEating() >= 3){
+		(Grid)[row-1][col]->starve(Grid);
+	}
 	(Grid)[row][col] = nullptr;
 	delete this;
 }
@@ -230,6 +230,9 @@ location, and removes the old one.
 void Doodlebug::move_right(Critter ***Grid) {
 	//stepsSinceBreeding++;
 	(Grid)[row][col + 1] = new Doodlebug(row, col + 1, stepsSinceBreeding, stepsSinceEating, true);
+	if(dynamic_cast<Doodlebug *>((Grid)[row][col+1])->getStepsSinceEating() >= 3){
+		(Grid)[row][col+1]->starve(Grid);
+	}
 	(Grid)[row][col] = nullptr;
 	delete this;
 }
@@ -243,6 +246,9 @@ location, and removes the old one.
 void Doodlebug::move_down(Critter ***Grid) {
 	//stepsSinceBreeding++;
 	(Grid)[row + 1][col] = new Doodlebug(row + 1, col, stepsSinceBreeding, stepsSinceEating, true);
+	if(dynamic_cast<Doodlebug *>((Grid)[row+1][col])->getStepsSinceEating() >= 3){
+		(Grid)[row+1][col]->starve(Grid);
+	}
 	(Grid)[row][col] = nullptr;
 	delete this;
 }
@@ -256,6 +262,9 @@ location, and removes the old one.
 void Doodlebug::move_left(Critter ***Grid) {
 	//stepsSinceBreeding++;
 	(Grid)[row][col - 1] = new Doodlebug(row, col - 1, stepsSinceBreeding, stepsSinceEating, true);
+	if(dynamic_cast<Doodlebug *>((Grid)[row][col - 1])->getStepsSinceEating() >= 3){
+		(Grid)[row][col - 1]->starve(Grid);
+	}
 	(Grid)[row][col] = nullptr;
 	delete this;
 }
@@ -279,6 +288,7 @@ Breed function overrides the Critter::breed pure virtual function. It is
   object.
 *******************************************************************************/
 void Doodlebug::starve(Critter ***Grid) {
+	std::cout << "Starve is called" << std::endl;
     int col = this->getCol();
     int row = this->getRow();
     (Grid)[row][col] = nullptr;
