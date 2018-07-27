@@ -93,7 +93,7 @@ int Doodlebug::check_ants(Critter ***Grid, int maxRows, int maxCols) {
 		up = false;
 	}
 	//check if at bottom of board. If false, then check if ant is present
-	if (row != maxRows-1 && Grid[row][col] != nullptr && Grid[row][col]->getStatus() == 'O') {
+	if (row != maxRows-1 && Grid[row + 1][col] != nullptr && Grid[row + 1][col]->getStatus() == 'O') {
 		down = true;
 	}
 	else {
