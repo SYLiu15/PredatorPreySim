@@ -19,6 +19,8 @@ void print_board(Critter ***, int, int);
 void reset_flags(Critter ***, int, int);
 int getChoice(int, int);
 
+void startSim();
+void repeatMenu();
 
 int main() {
 	cout << "\n\n\n\n";
@@ -31,6 +33,31 @@ int main() {
 
 	seed = static_cast<unsigned>(time(0));
 	srand(seed);
+
+	startSim();
+
+	// Ask if user would like to play again and loop until they don't
+	int repeatChoice;
+	do {
+		repeatMenu();
+		repeatChoice = getChoice(1,2);
+
+		switch(repeatChoice) {
+			case 1:
+				startSim();
+				break;
+			case 2:
+				break;
+			default:
+				break;
+		}
+	} while (repeatChoice != 2);	
+
+	return 0;
+	
+}
+
+void startSim() {
 
 	cout << "\nThe simulation will occur on a grid with user provided dimensions" << endl;
 	cout << "The number of ants and doodlebugs will be provided by the user and the placement randomized" << endl;
@@ -131,8 +158,6 @@ int main() {
 	}
 	delete [] array;
 
-	return 0;
-	
 }
 
 
@@ -248,4 +273,15 @@ int getChoice(int minChoice, int maxChoice) {
 	cin.ignore(256, '\n');
 
 	return input;
+}
+
+/*******************************************************************************
+repeatMenu is a void function without parameters. It prompts the user
+ to continue to play again or exit the simulation.
+*******************************************************************************/
+void repeatMenu() {
+	cout << "\nThank you for playing the Predator-Prey Simulation! " << endl;
+	cout << "\n\tPLAY AGAIN? \n \n";
+	cout << "1. Repeat the simulation by choosing 1. " << endl;
+	cout << "2. Quit the program by choosing 2." << endl;
 }
