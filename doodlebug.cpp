@@ -9,6 +9,7 @@
 *******************************************************************************/
 
 #include "doodlebug.hpp"
+#include <iostream>
 
 /*******************************************************************************
 				Doodlebug::Doodlebug
@@ -26,6 +27,15 @@ Doodlebug::Doodlebug() : Critter() {
 *******************************************************************************/
 Doodlebug::Doodlebug(int rowIn, int colIn, int steps, bool am) : Critter(rowIn, colIn, steps, am) {
 	stepsSinceEating = 0;
+}
+
+/*******************************************************************************
+				Doodlebug::Doodlebug
+5-parameter constructor, calls Critter 4-parameter constructor and assigns steps
+ since eating to the value passed as argument.
+*******************************************************************************/
+Doodlebug::Doodlebug(int rowIn, int colIn, int stepsB, int stepsEat, bool am) : Critter(rowIn, colIn, stepsB, am) {
+    stepsSinceEating = stepsEat;
 }
 
 /*******************************************************************************
@@ -61,9 +71,13 @@ void Doodlebug::move(Critter ***Grid, int maxRows, int maxCols) {
 			eat_left(Grid);
 			break;
 		default:
-			noEat_move(Grid, maxRows, maxCols); 
+			noEat_move(Grid, maxRows, maxCols);
 			break;	
 	}
+    std::cout << "Steps since eating: " << this->getStepsSinceEating();
+    if(this->getStepsSinceEating() >= 3){
+        this->starve(Grid);
+    }
 }
 
 /*******************************************************************************
@@ -188,9 +202,9 @@ will then call the overridden functions of move_up, move_right, move_down, or
 move_left.
 *******************************************************************************/
 void Doodlebug::noEat_move(Critter ***Grid, int maxRows, int maxCols) {
-	Critter::move(Grid, maxRows, maxCols);
-	stepsSinceEating++;
-	stepsSinceBreeding++;
+    stepsSinceEating++;
+    stepsSinceBreeding++;
+    Critter::move(Grid, maxRows, maxCols);
 }
 
 
@@ -201,8 +215,8 @@ increments the steps since breeding variable, adds a new Doodlebug to the new
 location, and removes the old one.
 *******************************************************************************/
 void Doodlebug::move_up(Critter ***Grid) {
-	stepsSinceBreeding++;
-	(Grid)[row - 1][col] = new Doodlebug(row - 1, col, stepsSinceBreeding, true);
+	//stepsSinceBreeding++;
+	(Grid)[row - 1][col] = new Doodlebug(row - 1, col, stepsSinceBreeding, stepsSinceEating, true);
 	(Grid)[row][col] = nullptr;
 	delete this;
 }
@@ -214,8 +228,8 @@ increments the steps since breeding variable, adds a new Doodlebug to the new
 location, and removes the old one.
 *******************************************************************************/
 void Doodlebug::move_right(Critter ***Grid) {
-	stepsSinceBreeding++;
-	(Grid)[row][col + 1] = new Doodlebug(row, col + 1, stepsSinceBreeding, true);
+	//stepsSinceBreeding++;
+	(Grid)[row][col + 1] = new Doodlebug(row, col + 1, stepsSinceBreeding, stepsSinceEating, true);
 	(Grid)[row][col] = nullptr;
 	delete this;
 }
@@ -227,8 +241,8 @@ increments the steps since breeding variable, adds a new Doodlebug to the new
 location, and removes the old one.
 *******************************************************************************/
 void Doodlebug::move_down(Critter ***Grid) {
-	stepsSinceBreeding++;
-	(Grid)[row + 1][col] = new Doodlebug(row + 1, col, stepsSinceBreeding, true);
+	//stepsSinceBreeding++;
+	(Grid)[row + 1][col] = new Doodlebug(row + 1, col, stepsSinceBreeding, stepsSinceEating, true);
 	(Grid)[row][col] = nullptr;
 	delete this;
 }
@@ -240,8 +254,8 @@ increments the steps since breeding variable, adds a new Doodlebug to the new
 location, and removes the old one.
 *******************************************************************************/
 void Doodlebug::move_left(Critter ***Grid) {
-	stepsSinceBreeding++;
-	(Grid)[row][col - 1] = new Doodlebug(row, col - 1, stepsSinceBreeding, true);
+	//stepsSinceBreeding++;
+	(Grid)[row][col - 1] = new Doodlebug(row, col - 1, stepsSinceBreeding, stepsSinceEating, true);
 	(Grid)[row][col] = nullptr;
 	delete this;
 }
@@ -259,15 +273,18 @@ Breed function overrides the Critter::breed pure virtual function. It is
 *******************************************************************************/
 
 /*******************************************************************************
-			Doodlebug::starve
-Breed function overrides the Critter::breed pure virtual function. It is
- called when the Doodlebug::stepsSinceEating variable is >= 3. It removes the
- Doodlebug from the grid by setting the grid location to nullptr. It returns
- true if completed.
+										Doodlebug::starve
+  Starve function sets the element that was occupied by the starved doodlebug to
+  nullptr. The function has one parameter which is a triple pointer to a Critter
+  object.
 *******************************************************************************/
-//void Doodlebug::starve() {
+void Doodlebug::starve(Critter ***Grid) {
+    int col = this->getCol();
+    int row = this->getRow();
+    (Grid)[row][col] = nullptr;
+    delete this;
+}
 
-//}
 /*******************************************************************************
 			Doodlebug::getStepsSinceEating
 Doodlebug::getStepsSinceEating is a function without parameters that returns the

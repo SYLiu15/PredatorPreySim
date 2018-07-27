@@ -40,6 +40,9 @@ public:
 	}
 	
 	//virtual void breed();
+	virtual void starve(Critter*** Grid){
+		std::cout << "If you're seeing this something is wrong!" << std::endl;
+	}
 };
 
 
