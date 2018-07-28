@@ -20,10 +20,12 @@ void move_ants(Critter ***, int, int);
 void breed_bugs(Critter ***, int, int);
 
 void print_board(Critter ***, int, int);
+void runRound(Critter ***, int, int);
 void reset_flags(Critter ***, int, int);
 int getChoice(int, int);
 
 void startSim();
+void repeatRoundMenu();
 void repeatMenu();
 
 int main() {
@@ -71,9 +73,7 @@ void startSim() {
 
 	cout << "\nPlease enter the number of columns for the grid (min-2, max-50): ";
 	int arrayWidth = getChoice(2, 50);
-	
-	//int arrayLength = 5, arrayWidth = 5;
-	
+		
 	//initialize array of Critter pointers
 	Critter ***array = new Critter**[arrayLength];
 	for (int i = 0; i < arrayLength; i++) {
@@ -90,12 +90,35 @@ void startSim() {
 	//print starting location
 	print_board(array, arrayLength, arrayWidth);
 
+	//run first round of simulation
+	runRound(array, arrayLength, arrayWidth);
+
+	int repeatRound;
+	do {
+		repeatRoundMenu();
+		repeatRound = getChoice(1,2);
+
+		switch(repeatRound) {
+			case 1: {
+				cout << "The simulation will run on the same grid." << endl;
+				runRound(array, arrayLength, arrayWidth);
+				break;
+				}
+			case 2:
+				break;
+			default:
+				break;
+		}
+	} while (repeatRound != 2);
+}
+
+void runRound(Critter ***array, int arrayLength, int arrayWidth) {
 	//prompt user for # of timesteps
 	cout << "How many timesteps would you like the simulation to run? (min-1, max-20000): ";
 	int timesteps = getChoice(1,20000); // Input validation
 
 	int stepCount = 0;
-	
+		
 	// removed value=1 from while condition
 	while (stepCount < timesteps) {
 		move_bugs(array, arrayLength, arrayWidth);
@@ -134,7 +157,6 @@ void startSim() {
 		delete [] array[i];
 	}
 	delete [] array;
-
 }
 
 
@@ -275,7 +297,11 @@ void breed_bugs(Critter ***array, int arrayLength, int arrayWidth) {
 	}
 }
 
-
+/*******************************************************************************
+print_board is a void function that takes parameters of the Critter grid, 
+the int value of the grid length and width. It prints the grid with O
+representing Ant pointers and X representing Doodlebug pointers.
+*******************************************************************************/
 void print_board(Critter ***array, int arrayLength, int arrayWidth) {
 	cout << endl;
 	for (int i = 0; i < arrayWidth+2; i++) {
@@ -315,6 +341,11 @@ void print_board(Critter ***array, int arrayLength, int arrayWidth) {
 	cout << endl;
 }
 
+/*******************************************************************************
+reset_flags is a void function that takes parameters of the Critter grid, 
+the int value of the grid length and width. It sets all boolean flags of all
+existing Critters' alreadyMoved variable to false for the next round.
+*******************************************************************************/
 void reset_flags(Critter ***array, int arrayLength, int arrayWidth) {
 	for (int i = 0; i < arrayLength; i++) {
 		for (int j = 0; j < arrayWidth; j++) {
@@ -324,10 +355,23 @@ void reset_flags(Critter ***array, int arrayLength, int arrayWidth) {
 		}
 	}
 }
-
+/*******************************************************************************
+repeatMenu is a void function without parameters. It prompts the user
+ to continue running the simulation on the same board or exit the current board.
+*******************************************************************************/
+void repeatRoundMenu() {
+	cout << "\nThe simulation has run for the number of timesteps you entered." << endl;
+       	cout << "Would you like to run more timesteps on the same grid?" << endl;
+	cout << "1. Enter more steps for this grid." << endl;
+	cout << "2. Quit" << endl;
+	cout << "Choose an option: ";	
+}
+/*******************************************************************************
+getChoice is a function that takes a min and max int parameter, and performs
+input validation. It returns the int value of user input.
+*******************************************************************************/
 int getChoice(int minChoice, int maxChoice) {
 	int input;
-	//cout << "Please enter your choice: ";
 	cin >> input;
 
 	// Try again if input is out of range or fails
