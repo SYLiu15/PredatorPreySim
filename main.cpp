@@ -63,7 +63,11 @@ int main() {
 	return 0;
 	
 }
-
+/*******************************************************************************
+startSim is a void function without parameters. It allows the user to enter
+the size of board and constructs the board. It calls the appropriate functions
+to place bugs, print, run each round, and ask for the user to repeat.
+*******************************************************************************/
 void startSim() {
 
 	cout << "\nThe simulation will occur on a grid with user provided dimensions" << endl;
@@ -111,7 +115,11 @@ void startSim() {
 		}
 	} while (repeatRound != 2);
 }
-
+/*******************************************************************************
+runRound is a void function that takes paramters of the Critter pointer board,
+its length and width. It runs the simulation for the number of steps that the 
+user has specified, then destructs the board.
+*******************************************************************************/
 void runRound(Critter ***array, int arrayLength, int arrayWidth) {
 	//prompt user for # of timesteps
 	cout << "How many timesteps would you like the simulation to run? (min-1, max-20000): ";
