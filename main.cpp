@@ -58,7 +58,7 @@ int main() {
 			default:
 				break;
 		}
-	} while (repeatChoice != 2);	
+	} while (repeatChoice != 2);
 
 	return 0;
 	
@@ -104,7 +104,7 @@ void startSim() {
 
 		switch(repeatRound) {
 			case 1: {
-				cout << "The simulation will run on the same grid." << endl;
+				//cout << "The simulation will run on the same grid." << endl;
 				runRound(array, arrayLength, arrayWidth);
 				break;
 				}
@@ -114,6 +114,15 @@ void startSim() {
 				break;
 		}
 	} while (repeatRound != 2);
+	
+	//remove all data from memory
+	for (int i = 0; i < arrayLength; i++) {
+		for (int j = 0; j < arrayWidth; j++) {
+			delete array[i][j];
+		}
+		delete [] array[i];
+	}
+	delete [] array;
 }
 /*******************************************************************************
 runRound is a void function that takes paramters of the Critter pointer board,
@@ -134,8 +143,6 @@ void runRound(Critter ***array, int arrayLength, int arrayWidth) {
 		
 		breed_bugs(array, arrayLength, arrayWidth);
 		
-		//print board
-		print_board(array, arrayLength, arrayWidth);
 		
 		//reset already_moved flags back to false after all moves made
 		reset_flags(array, arrayLength, arrayWidth);
@@ -148,26 +155,24 @@ void runRound(Critter ***array, int arrayLength, int arrayWidth) {
 		//this stops the sim at every step, used it for testing.
 		//Need to implement ability to stop at every step.
 		//******************************
-		string input = "";
+		/*string input = "";
 		cout << "Press enter to run next step (q to quit): ";
 		getline(cin, input);
 		if (input == "q") {
 			break;
-		}
+		}*/
 		//******************************
 	}
-	
-	//remove all data from memory
-	for (int i = 0; i < arrayLength; i++) {
-		for (int j = 0; j < arrayWidth; j++) {
-			delete array[i][j];
-		}
-		delete [] array[i];
-	}
-	delete [] array;
+	//print board
+	print_board(array, arrayLength, arrayWidth);
 }
 
 
+/*******************************************************************************
+** Prompt user for the number of ants and doodlebugs to place. Uses arrayLength
+** and arrayWidth to determine the maximum amount the user can provide.
+** Runs place_ant and place_doodlebugs function until all bugs have been placed.
+*******************************************************************************/
 void place_bugs(Critter ***array, int arrayLength, int arrayWidth) {
 	//get number of ants
 	cout << "\nEnter the number of ants (min-1, max-" << arrayLength*arrayWidth-1 << "): ";
@@ -193,6 +198,9 @@ void place_bugs(Critter ***array, int arrayLength, int arrayWidth) {
 	}
 }
 
+/*******************************************************************************
+** randomizes coordinate on the board until the location is nullptr. Places ant if true.
+*******************************************************************************/
 void place_ants(Critter ***array, int arrayLength, int arrayWidth) {
 	int row, col;
 	do {
@@ -203,6 +211,9 @@ void place_ants(Critter ***array, int arrayLength, int arrayWidth) {
 	array[row][col] = new Ant(row,col,0,false);
 }
 
+/*******************************************************************************
+** randomizes coordinate on the board until the location is nullptr. Places doodlebug if true.
+*******************************************************************************/
 void place_doodlebugs(Critter ***array, int arrayLength, int arrayWidth) {
 	int row, col;
 	do {
@@ -214,6 +225,16 @@ void place_doodlebugs(Critter ***array, int arrayLength, int arrayWidth) {
 }
 
 
+/*******************************************************************************
+** Determine number of doodlebugs, randomize coordinates to select doodlebugs to move,
+** continue until no doodlebugs left.
+** OR
+** 10000 iterations have been reach, at which it would likely take too long to resolve,
+** reverts back to original behavior and scans from left to right, top to bottom.
+**
+** Result is that behavior is overall more randomized. No visible tendency of bugs to
+** move to one area of the board.
+*******************************************************************************/
 void move_bugs(Critter ***array, int arrayLength, int arrayWidth) {
 	int row, col, iteration = 0, numBugs = 0;
 	
@@ -250,6 +271,9 @@ void move_bugs(Critter ***array, int arrayLength, int arrayWidth) {
 	//cout << "Took " << iteration << " iterations" << endl;
 }
 
+/*******************************************************************************
+** Same behavior as move_bugs
+*******************************************************************************/
 void move_ants(Critter ***array, int arrayLength, int arrayWidth) {
 	int row, col, iteration = 0, numBugs = 0;
 	
@@ -286,6 +310,10 @@ void move_ants(Critter ***array, int arrayLength, int arrayWidth) {
 	//cout << "Took " << iteration << " iterations" << endl;
 }
 
+/*******************************************************************************
+** scans from left to right, top to bottom, runns breed() on each bug.
+** doodlebugs run first.
+*******************************************************************************/
 void breed_bugs(Critter ***array, int arrayLength, int arrayWidth) {
 	//breed doodlebugs
 	for (int i = 0; i < arrayLength; i++) {
@@ -368,11 +396,11 @@ repeatMenu is a void function without parameters. It prompts the user
  to continue running the simulation on the same board or exit the current board.
 *******************************************************************************/
 void repeatRoundMenu() {
-	cout << "\nThe simulation has run for the number of timesteps you entered." << endl;
-       	cout << "Would you like to run more timesteps on the same grid?" << endl;
-	cout << "1. Enter more steps for this grid." << endl;
-	cout << "2. Quit" << endl;
-	cout << "Choose an option: ";	
+	//cout << "\nThe simulation has run for the number of timesteps you entered." << endl;
+    cout << "Would you like to continue for more timesteps?" << endl;
+	cout << "1. Enter more steps to run" << endl;
+	cout << "2. Quit current simulation" << endl;
+	cout << "Choose an option: ";
 }
 /*******************************************************************************
 getChoice is a function that takes a min and max int parameter, and performs
