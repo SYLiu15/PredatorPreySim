@@ -15,6 +15,10 @@ void place_bugs(Critter ***, int, int);
 void place_ants(Critter ***, int, int);
 void place_doodlebugs(Critter ***, int, int);
 
+void move_bugs(Critter ***, int, int);
+void move_ants(Critter ***, int, int);
+void breed_bugs(Critter ***, int, int);
+
 void print_board(Critter ***, int, int);
 void reset_flags(Critter ***, int, int);
 int getChoice(int, int);
@@ -44,6 +48,7 @@ int main() {
 
 		switch(repeatChoice) {
 			case 1:
+				cout << "\n\n\n\n";
 				startSim();
 				break;
 			case 2:
@@ -82,55 +87,22 @@ void startSim() {
 	place_bugs(array, arrayLength, arrayWidth);
 	
 	//run simulation, repeat until user types 'q'
-	//int value = 1;
 	//print starting location
 	print_board(array, arrayLength, arrayWidth);
 
 	//prompt user for # of timesteps
-	cout << "How many timesteps would you like the simulation to run? (min-1, max-20000): " << endl;
+	cout << "How many timesteps would you like the simulation to run? (min-1, max-20000): ";
 	int timesteps = getChoice(1,20000); // Input validation
-
-	cout << "Press enter to continue: ";
-	cin.ignore(256,'\n');
 
 	int stepCount = 0;
 	
 	// removed value=1 from while condition
 	while (stepCount < timesteps) {
-		//move doodlebugs first	(starve called from move)	
-		for (int i = 0; i < arrayLength; i++) {
-			for (int j = 0; j < arrayWidth; j++) {
-				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'X') && (array[i][j]->getAlreadyMoved() == false)) {
-					array[i][j]->move(array, arrayLength, arrayWidth);
-				}
-			}
-		}
-
-		//then move ants
-		for (int i = 0; i < arrayLength; i++) {
-			for (int j = 0; j < arrayWidth; j++) {
-				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'O') && (array[i][j]->getAlreadyMoved() == false)) {
-					array[i][j]->move(array, arrayLength, arrayWidth);
-				}
-			}
-		}
-		//then breed doodlebugs
-		for (int i = 0; i < arrayLength; i++) {
-			for (int j = 0; j < arrayWidth; j++) {
-				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'X') && (array[i][j]->getStepsSinceBreeding() >= 8)) {
-					array[i][j]->breed(array, arrayLength, arrayWidth);
-				}
-			}
-		}
-		//then breed ants
-		for (int i = 0; i < arrayLength; i++) {
-			for (int j = 0; j < arrayWidth; j++) {
-				if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'O') && (array[i][j]->getStepsSinceBreeding() >= 3)) {
-					array[i][j]->breed(array, arrayLength, arrayWidth);
-				}
-			}
-		}
-
+		move_bugs(array, arrayLength, arrayWidth);
+		move_ants(array, arrayLength, arrayWidth);
+		
+		breed_bugs(array, arrayLength, arrayWidth);
+		
 		//print board
 		print_board(array, arrayLength, arrayWidth);
 		
@@ -141,12 +113,17 @@ void startSim() {
 		stepCount++;
 		
 		//prompt for continue
-		//string input = "";
-		//cout << "Press enter to continue (q to quit): ";
-		//getline(cin, input);
-		//if (input == "q") {
-		//	value = 0;
-		//}
+		//REMOVE THIS ***********************************************
+		//this stops the sim at every step, used it for testing.
+		//Need to implement ability to stop at every step.
+		//******************************
+		string input = "";
+		cout << "Press enter to run next step (q to quit): ";
+		getline(cin, input);
+		if (input == "q") {
+			break;
+		}
+		//******************************
 	}
 	
 	//remove all data from memory
@@ -175,7 +152,7 @@ void place_bugs(Critter ***array, int arrayLength, int arrayWidth) {
 	}
 	int doodle = getChoice(1, arrayLength*arrayWidth - ants);
 	
-	//Add ants if still remaining
+	//Add bugs if still remaining
 	while (ants > 0) {
 		place_ants(array, arrayLength, arrayWidth);
 		ants--;
@@ -207,10 +184,107 @@ void place_doodlebugs(Critter ***array, int arrayLength, int arrayWidth) {
 }
 
 
+void move_bugs(Critter ***array, int arrayLength, int arrayWidth) {
+	int row, col, iteration = 0, numBugs = 0;
+	
+	for (int i = 0; i < arrayLength; i++) {
+		for (int j = 0; j < arrayWidth; j++) {
+			if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'X') && (array[i][j]->getAlreadyMoved() == false)) {
+				numBugs++;
+			}
+		}
+	}
+	//cout << "\n\nNumber of bugs is " << numBugs << endl;
+	
+	while (numBugs > 0) {
+		row = rand()%arrayLength;
+		col = rand()%arrayWidth;
+		
+		if ((array[row][col] != nullptr) && (array[row][col]->getStatus() == 'X') && (array[row][col]->getAlreadyMoved() == false)) {
+			array[row][col]->move(array, arrayLength, arrayWidth);
+			numBugs--;
+		}
+		iteration++;
+		
+		if (iteration > 10000) {
+			for (int i = 0; i < arrayLength; i++) {
+				for (int j = 0; j < arrayWidth; j++) {
+					if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'X') && (array[i][j]->getAlreadyMoved() == false)) {
+						array[i][j]->move(array, arrayLength, arrayWidth);
+					}
+				}
+			}
+			numBugs = 0;
+		}
+	}
+	//cout << "Took " << iteration << " iterations" << endl;
+}
+
+void move_ants(Critter ***array, int arrayLength, int arrayWidth) {
+	int row, col, iteration = 0, numBugs = 0;
+	
+	for (int i = 0; i < arrayLength; i++) {
+		for (int j = 0; j < arrayWidth; j++) {
+			if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'O') && (array[i][j]->getAlreadyMoved() == false)) {
+				numBugs++;
+			}
+		}
+	}
+	//cout << "Number of ants is " << numBugs << endl;
+	
+	while (numBugs > 0) {
+		row = rand()%arrayLength;
+		col = rand()%arrayWidth;
+		
+		if ((array[row][col] != nullptr) && (array[row][col]->getStatus() == 'O') && (array[row][col]->getAlreadyMoved() == false)) {
+			array[row][col]->move(array, arrayLength, arrayWidth);
+			numBugs--;
+		}
+		iteration++;
+		
+		if (iteration > 10000) {
+			for (int i = 0; i < arrayLength; i++) {
+				for (int j = 0; j < arrayWidth; j++) {
+					if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'O') && (array[i][j]->getAlreadyMoved() == false)) {
+						array[i][j]->move(array, arrayLength, arrayWidth);
+					}
+				}
+			}
+			numBugs = 0;
+		}
+	}
+	//cout << "Took " << iteration << " iterations" << endl;
+}
+
+void breed_bugs(Critter ***array, int arrayLength, int arrayWidth) {
+	//breed doodlebugs
+	for (int i = 0; i < arrayLength; i++) {
+		for (int j = 0; j < arrayWidth; j++) {
+			if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'X') && (array[i][j]->getStepsSinceBreeding() >= 8)) {
+				array[i][j]->breed(array, arrayLength, arrayWidth);
+			}
+		}
+	}
+	//then breed ants
+	for (int i = 0; i < arrayLength; i++) {
+		for (int j = 0; j < arrayWidth; j++) {
+			if ((array[i][j] != nullptr) && (array[i][j]->getStatus() == 'O') && (array[i][j]->getStepsSinceBreeding() >= 3)) {
+				array[i][j]->breed(array, arrayLength, arrayWidth);
+			}
+		}
+	}
+}
+
+
 void print_board(Critter ***array, int arrayLength, int arrayWidth) {
 	cout << endl;
 	for (int i = 0; i < arrayWidth+2; i++) {
-		cout << "- ";
+		if (i == arrayWidth+1) {
+			cout << "-";
+		}
+		else {
+			cout << "--";
+		}
 	}
 	cout << endl;
 	for (int i = 0; i < arrayLength; i++) {
@@ -220,13 +294,23 @@ void print_board(Critter ***array, int arrayLength, int arrayWidth) {
 				cout << "  ";
 			}
 			else {
-				cout << array[i][j]->getStatus() << " ";
+				if (array[i][j]->getStatus() == 'O') {
+					cout << " \033[37;40m" << array[i][j]->getStatus() << "\033[0m";
+				}
+				else {
+					cout << " \033[31;40m" << array[i][j]->getStatus() << "\033[0m";
+				}
 			}
 		}
-		cout << "|" << endl;
+		cout << " |" << endl;
 	}
 	for (int i = 0; i < arrayWidth+2; i++) {
-		cout << "- ";
+		if (i == arrayWidth+1) {
+			cout << "-";
+		}
+		else {
+			cout << "--";
+		}
 	}
 	cout << endl;
 }
@@ -272,8 +356,9 @@ repeatMenu is a void function without parameters. It prompts the user
  to continue to play again or exit the simulation.
 *******************************************************************************/
 void repeatMenu() {
-	cout << "\nThank you for playing the Predator-Prey Simulation! " << endl;
+	cout << "\n\n\n\nThank you for playing the Predator-Prey Simulation! " << endl;
 	cout << "\n\tPLAY AGAIN? \n \n";
-	cout << "1. Repeat the simulation by choosing 1. " << endl;
-	cout << "2. Quit the program by choosing 2." << endl;
+	cout << "1. Restart simulation" << endl;
+	cout << "2. Quit" << endl;
+	cout << "Choose an option: ";
 }
