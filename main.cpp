@@ -1,3 +1,11 @@
+/*************************************************************************************
+** Program name: Predator-Prey Game Group Project
+** Author: William Darnell, Suyang Liu, Paul Min, Brian Sprague, Angela Wen (Group 13)
+** Date: 7/29
+** Description: Predator-prey simulation. Allows selectable board size, as well as
+** Ant(prey) and doodlebug(predator) populations. Number of steps is configurable
+** and simulation may continue after provided steps is reached.
+**************************************************************************************/
 #include <iostream>
 #include <ctime>
 using std::cout;
@@ -30,9 +38,11 @@ void repeatMenu();
 
 int main() {
 	cout << "\n\n\n\n";
-	cout << "***********************************************" << endl;
+	cout << "********************************************************************" << endl;
 	cout << "Welcome to Group 13's Predator-Prey Simulation." << endl;
-	cout << "***********************************************" << endl;
+	cout << "\nEXTRA CREDIT INCLUDED." << endl;
+	cout << "User may select grid size, number of ants, and number of doodlebugs." << endl;
+	cout << "********************************************************************" << endl;
 	// Set a random generator seed
 	// Referenced from Program 3-32 of C++ Early Objects, 9th Edition
 	unsigned seed;
